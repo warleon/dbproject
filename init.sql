@@ -1,3 +1,3 @@
 CREATE SCHEMA dbProject;
 
-SET SCHEMA dbProject;
+SET SCHEMA 'dbProject';
