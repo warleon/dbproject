@@ -1,6 +1,6 @@
 --servidor constraints
 ALTER TABLE servidor
-ADD CONSTRAINT pk_nombre
+ADD CONSTRAINT pk_snombre
 PRIMARY KEY (Nombre);
 
 ALTER TABLE servidor
@@ -10,16 +10,16 @@ REFERENCES usuario(Nombre);
 
 --usuario constraints
 ALTER TABLE usuario
-ADD CONSTRAINT pk_nombre
+ADD CONSTRAINT pk_unombre
 PRIMARY KEY (Nombre);
 
 --sala constraints
 ALTER TABLE sala
-ADD CONSTRAINT pk_codigo
+ADD CONSTRAINT pk_scodigo
 PRIMARY KEY (codigo);
 
 ALTER TABLE sala
-ADD CONSTRAINT fk_snombre
+ADD CONSTRAINT sfk_snombre
 FOREIGN KEY (ServidorNombre)
 REFERENCES servidor(Nombre);
 
@@ -29,21 +29,21 @@ CHECK (ALL (listaJugadores) in usuario.Nombre);
 
 --partida constraints
 ALTER TABLE partida
-ADD CONSTRAINT pk_codigo
+ADD CONSTRAINT pk_pcodigo
 PRIMARY KEY (codigo);
 
 ALTER TABLE partida
-ADD CONSTRAINT fk_snombre
+ADD CONSTRAINT pfk_snombre
 FOREIGN KEY (ServidorNombre)
 REFERENCES servidor(Nombre);
 
 ALTER TABLE partida
-ADD CONSTRAINT fk_scodigo
+ADD CONSTRAINT pfk_scodigo
 FOREIGN KEY (SalaCodigo)
 REFERENCES sala(codigo);
 
 ALTER TABLE partida
-ADD CONSTRAINT escenario
+ADD CONSTRAINT PEscenario
 CHECK (EscenarioNombre IN ( SELECT nombre
                             FROM item
                             WHERE tipo="Escenario")
@@ -55,18 +55,18 @@ ADD CONSTRAINT pk_usuario-partida
 PRIMARY KEY (UsuarioNombre, PartidaCodigo);
 
 ALTER TABLE juega
-ADD CONSTRAINT fk_usuario
+ADD CONSTRAINT jfk_usuario
 FOREIGN KEY (UsuarioNombre)
 REFERENCES usuario(nombre);
 
 ALTER TABLE juega
-ADD CONSTRAINT fk_partida
+ADD CONSTRAINT jfk_partida
 FOREIGN KEY (PartidaCodigo)
 REFERENCES partida(codigo);
 
 --item constraints
 ALTER TABLE item
-ADD CONSTRAINT pk_nombre
+ADD CONSTRAINT ipk_nombre
 PRIMARY KEY (Nombre);
 
 --posee constraints
@@ -75,12 +75,12 @@ ADD CONSTRAINT pk_usuario-item
 PRIMARY KEY (UsuarioNombre, ItemNombre);
 
 ALTER TABLE posee
-ADD CONSTRAINT fk_usuario
+ADD CONSTRAINT pfk_usuario
 FOREIGN KEY (UsuarioNombre)
 REFERENCES usuario(nombre);
 
 ALTER TABLE posee
-ADD CONSTRAINT fk_item
+ADD CONSTRAINT pfk_item
 FOREIGN KEY (ItemNombre)
 REFERENCES item(Nombre);
 
