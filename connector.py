@@ -10,14 +10,13 @@ usuario_tipos = ['j', 'c', 's']
 
 def main():
     conn = psycopg2.connect(database=DATABASE, options="-c search_path={}".format(SCHEMA))
-    insertUsuario(10, conn)
-    doQuery("select * from usuario", conn)
-    conn.close()
-
-def doQuery(query, conn):
     curr = conn.cursor()
-    curr.execute(query)
-    print(curr.fetchall())
+
+    insertUsuario(curr, 10)
+    
+    conn.commit()
+    curr.close()
+    conn.close()
 
 # Returns a string to format with n values
 def valuesFormat(n):
@@ -26,12 +25,11 @@ def valuesFormat(n):
         values += ",'{}'"
     return values
 
-def insertUsuario(n, conn):
+def insertUsuario(curr, n):
     table = "usuario(nombre, tipo)"
     values = valuesFormat(2)
     for x in range(n):
         query = INSERT.format(table, values.format(gen.rand_str(string.ascii_letters, 30), gen.rand_str(usuario_tipos, 1)))
-        curr = conn.cursor()
         curr.execute(query)
 
 
