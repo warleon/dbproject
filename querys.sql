@@ -1,0 +1,29 @@
+--query 1
+SELECT
+FROM
+WHERE
+;
+
+--query 2
+SELECT
+FROM
+WHERE
+;
+
+--query 3
+SELECT
+FROM
+WHERE
+;
+
+--query 4
+SELECT
+FROM
+WHERE
+;
+
+--query 5
+SELECT
+FROM
+WHERE
+;
