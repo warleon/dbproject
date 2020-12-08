@@ -17,18 +17,18 @@ REFERENCES usuario(Nombre);
 
 --sala constraints
 ALTER TABLE sala
-ADD CONSTRAINT sala_pk_codigo
-PRIMARY KEY (codigo);
+ADD CONSTRAINT sala_pk_codigo_jugadores
+PRIMARY KEY (codigo,listaJugadores);
 
 ALTER TABLE sala
 ADD CONSTRAINT sala_fk_snombre
 FOREIGN KEY (ServidorNombre)
 REFERENCES servidor(Nombre);
 
-// TODO fix
-/* ALTER TABLE sala
+ALTER TABLE sala
 ADD CONSTRAINT todosSonJugadores
-CHECK (ALL (listaJugadores) in usuario.Nombre); */
+FOREIGN KEY (Jugadores)
+REFERENCES usuario(Nombre);
 
 
 --partida constraints
@@ -46,13 +46,14 @@ ADD CONSTRAINT part_fk_scodigo
 FOREIGN KEY (SalaCodigo)
 REFERENCES sala(codigo);
 
+/*
 ALTER TABLE partida
 ADD CONSTRAINT PEscenario
 CHECK (EscenarioNombre IN ( SELECT nombre
                             FROM item
                             WHERE tipo="Escenario")
 );
-
+*/
 
 --juega constraints
 ALTER TABLE juega

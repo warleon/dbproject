@@ -15,25 +15,25 @@ CREATE TABLE servidor(
 
 CREATE TABLE usuario(
 	nombre			varchar(30),
-	tipo			varchar(3)
+	--tipo			varchar(3)
 	--j(jugador)c(comerciante)s(server-owner)
 );
 
 CREATE TABLE sala(
 	ServidorNombre	varchar(35),
 	codigo			int,
-	UsuarioNombre	varchar(30),
+	--UsuarioNombre	varchar(30),
    	enJuego			boolean,
-	listaJugadores	varchar(30)[]
+	Jugadores		varchar(30)
 );
 
 CREATE TABLE partida(
 	codigo			int,
 	ServidorNombre	varchar(30),
 	SalaCodigo		int,
-	--listaJugadores	varchar(30)[]--innecesario x la tabla juega
+	Jugadores		varchar(30)--innecesario x la tabla juega
 	fecha			date,
-	duracion		float,
+	duracion		time,
 	EscenarioNombre	varchar(16),
 	acciones		varchar(255)--direccion en disco de las acciones hechas en esa partida
 );
