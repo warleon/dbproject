@@ -24,7 +24,7 @@ CREATE TABLE sala(
 	codigo			int,
 	--UsuarioNombre	varchar(30),
    	enJuego			boolean,
-	Jugadores		varchar(30)
+	--Jugadores		varchar(30)
 );
 
 CREATE TABLE partida(
