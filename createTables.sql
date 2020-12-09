@@ -3,7 +3,7 @@ CREATE TYPE itemType AS ENUM ('Escenario', 'Audio', '3Dmodel');--pendiente
 
 
 CREATE TABLE servidor(
-	Nombre			varchar(35),
+	Nombre			varchar(35), -- Porque no id?
 	UsuarioNombre	varchar(30),
 	ip				varchar(15),
 	activo			boolean,
