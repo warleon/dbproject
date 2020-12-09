@@ -37,15 +37,29 @@ def insertUsuario(curr, n):
 def insertServidor(curr):
     table = "servidor(nombre, usuarionombre, ip, activo, jugadores, flujo, idioma, locacion)"
     values = valuesFormat(8)
-    # TODO get usuarios that are also hosts
-    curr.execute(SELECT.format('*', 'usuario', "tipo='s'"))
+    curr.execute(SELECT.format('nombre', 'usuario', "tipo='s'"))
     queryResult = curr.fetchall()
+    # Add 0 to 5 servidores for each user that is a server-owner
     for row in queryResult:
         usuario = row[0]
         for i in range(gen.rand_num(5)):
             curr.execute(INSERT.format(table, values.format(gen.get_nombre(),
             usuario, gen.get_ip(), gen.rand_bool(), gen.rand_num(10), gen.rand_num(10),
             gen.get_idioma(), gen.get_locacion())))
+
+def insertSala(curr):
+    table = "sala(servidornombre, codigo, enjuego)"
+    values = valuesFormat(3)
+    curr.execute(SELECT.format('nombre', 'servidor'))
+    queryResult = curr.fetchall()
+    # Add 0 to 10 salas for each servidor
+    codigo = 1
+    for row in queryResult:
+        servidornombre = queryResult[0]
+        for i in range(gen.rand_num(10)):
+            # TODO remove jugadores from sala
+            curr.execute(INSERT.format(table, values.format(servidornombre, codigo, gen.rand_bool())))
+            codigo += 1
 
 
 main()

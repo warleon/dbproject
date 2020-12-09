@@ -1,18 +1,18 @@
 --usuario constraints
 ALTER TABLE usuario
 ADD CONSTRAINT usuario_pk_nombre
-PRIMARY KEY (Nombre);
+PRIMARY KEY (nombre);
 
 
 --servidor constraints
 ALTER TABLE servidor
 ADD CONSTRAINT serv_pk_nombre
-PRIMARY KEY (Nombre);
+PRIMARY KEY (nombre);
 
 ALTER TABLE servidor
 ADD CONSTRAINT serv_fk_unombre
-FOREIGN KEY (UsuarioNombre)
-REFERENCES usuario(Nombre);
+FOREIGN KEY (usuario_nombre)
+REFERENCES usuario(nombre);
 
 
 --sala constraints
@@ -22,13 +22,13 @@ PRIMARY KEY (codigo);
 
 ALTER TABLE sala
 ADD CONSTRAINT sala_fk_snombre
-FOREIGN KEY (ServidorNombre)
-REFERENCES servidor(Nombre);
+FOREIGN KEY (servidor_nombre)
+REFERENCES servidor(nombre);
 
-ALTER TABLE sala
-ADD CONSTRAINT todosSonJugadores
-FOREIGN KEY (Jugadores)
-REFERENCES usuario(Nombre);
+-- ALTER TABLE sala
+-- ADD CONSTRAINT todos_son_jugadores
+-- FOREIGN KEY (jugadores)
+-- REFERENCES usuario(nombre);
 
 
 --partida constraints
@@ -38,12 +38,12 @@ PRIMARY KEY (codigo);
 
 ALTER TABLE partida
 ADD CONSTRAINT part_fk_snombre
-FOREIGN KEY (ServidorNombre)
-REFERENCES servidor(Nombre);
+FOREIGN KEY (servidor_nombre)
+REFERENCES servidor(nombre);
 
 ALTER TABLE partida
 ADD CONSTRAINT part_fk_scodigo
-FOREIGN KEY (SalaCodigo)
+FOREIGN KEY (sala_codigo)
 REFERENCES sala(codigo);
 
 /*
@@ -58,39 +58,39 @@ CHECK (EscenarioNombre IN ( SELECT nombre
 --juega constraints
 ALTER TABLE juega
 ADD CONSTRAINT juega_pk_usuario_partida
-PRIMARY KEY (UsuarioNombre, PartidaCodigo);
+PRIMARY KEY (usuario_nombre, partida_codigo);
 
 ALTER TABLE juega
 ADD CONSTRAINT juega_fk_usuario
-FOREIGN KEY (UsuarioNombre)
+FOREIGN KEY (usuario_nombre)
 REFERENCES usuario(nombre);
 
 ALTER TABLE juega
 ADD CONSTRAINT juega_fk_partida
-FOREIGN KEY (PartidaCodigo)
+FOREIGN KEY (partida_codigo)
 REFERENCES partida(codigo);
 
 
 --item constraints
 ALTER TABLE item
 ADD CONSTRAINT item_pk_nombre
-PRIMARY KEY (Nombre);
+PRIMARY KEY (nombre);
 
 
 --posee constraints
 ALTER TABLE posee
 ADD CONSTRAINT posee_pk_usuario_item
-PRIMARY KEY (UsuarioNombre, ItemNombre);
+PRIMARY KEY (usuario_nombre, item_nombre);
 
 ALTER TABLE posee
 ADD CONSTRAINT posee_fk_usuario
-FOREIGN KEY (UsuarioNombre)
+FOREIGN KEY (usuario_nombre)
 REFERENCES usuario(nombre);
 
 ALTER TABLE posee
 ADD CONSTRAINT posee_fk_item
-FOREIGN KEY (ItemNombre)
-REFERENCES item(Nombre);
+FOREIGN KEY (item_nombre)
+REFERENCES item(nombre);
 
 /*
 ALTER TABLE posee

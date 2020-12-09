@@ -1,51 +1,49 @@
 CREATE TYPE contractType AS ENUM ('tipo1','tipo2','tipo3');--pendiente
 CREATE TYPE itemType AS ENUM ('Escenario', 'Audio', '3Dmodel');--pendiente
 
-
 CREATE TABLE servidor(
-	Nombre			varchar(35), -- Porque no id?
-	UsuarioNombre	varchar(30),
+	nombre			varchar(35), -- Porque no id?
+	usuario_nombre	varchar(30),
 	ip				varchar(15),
 	activo			boolean,
-	jugadores		int,
-	flujo			int,
 	idioma			varchar(10),
 	locacion		varchar(15)
 );
 
 CREATE TABLE usuario(
 	nombre			varchar(30),
-	tipo			varchar(3)
-	--j(jugador)c(comerciante)s(server-owner)
+	is_jugador 		boolean,
+	is_comerciante	boolean,
+	is_server_Owner 	boolean
 );
 
 CREATE TABLE sala(
-	ServidorNombre	varchar(35),
+	servidor_nombre	varchar(35),
 	codigo			int,
 	--UsuarioNombre	varchar(30),
-   	enJuego			boolean,
+   	en_juego			boolean
 	--Jugadores		varchar(30)
 );
 
 CREATE TABLE partida(
 	codigo			int,
-	ServidorNombre	varchar(30),
-	SalaCodigo		int,
+	servidor_nombre	varchar(30),
+	sala_codigo		int,
 	-- Jugadores		varchar(30), innecesario por la tabla juega
 	fecha			date,
 	duracion		time,
-	EscenarioNombre	varchar(16),
-	acciones		varchar(255)--direccion en disco de las acciones hechas en esa partida
+	escenario_nombre	varchar(16)
+	-- acciones		varchar(255)--direccion en disco de las acciones hechas en esa partida
 );
 
 CREATE TABLE juega(
-	UsuarioNombre	varchar(30),
-	PartidaCodigo	int
+	usuario_nombre	varchar(30),
+	partida_codigo	int
 );
 
 CREATE TABLE item(
 	nombre			varchar(60),
-	limiteUsos		int,
+	limite_usos		int,
 	descripcion		varchar(255),
 	contrato		contractType,
 	tipo			itemType,
@@ -53,6 +51,6 @@ CREATE TABLE item(
 );
 
 CREATE TABLE posee(
-	UsuarioNombre	varchar(30),
-	ItemNombre		varchar(60)
+	usuario_nombre	varchar(30),
+	item_nombre		varchar(60)
 );
