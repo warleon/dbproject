@@ -15,7 +15,7 @@ CREATE TABLE servidor(
 
 CREATE TABLE usuario(
 	nombre			varchar(30),
-	--tipo			varchar(3)
+	tipo			varchar(3)
 	--j(jugador)c(comerciante)s(server-owner)
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE partida(
 	codigo			int,
 	ServidorNombre	varchar(30),
 	SalaCodigo		int,
-	Jugadores		varchar(30)--innecesario x la tabla juega
+	-- Jugadores		varchar(30), innecesario por la tabla juega
 	fecha			date,
 	duracion		time,
 	EscenarioNombre	varchar(16),

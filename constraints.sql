@@ -18,7 +18,7 @@ REFERENCES usuario(Nombre);
 --sala constraints
 ALTER TABLE sala
 ADD CONSTRAINT sala_pk_codigo_jugadores
-PRIMARY KEY (codigo,listaJugadores);
+PRIMARY KEY (codigo);
 
 ALTER TABLE sala
 ADD CONSTRAINT sala_fk_snombre
