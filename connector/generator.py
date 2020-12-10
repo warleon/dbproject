@@ -1,4 +1,4 @@
-import random as rd, string
+import random as rd, string, datetime as dt
 
 # Sample dictionaries
 usuario_tipos = ['j', 'c', 's']
@@ -13,7 +13,7 @@ def rand_num(max):
     return rd.randint(0, max)
 
 def rand_str(strings, size):
-    return ''.join(rd.choice(string) for x in range(size))
+    return ''.join(rd.choice(strings) for x in range(size))
 
 def rand_bool():
     return rd.choice(bools)
@@ -38,3 +38,14 @@ def get_contract():
 
 def get_item():
     return rand_str(itemTypes, 1)
+
+def get_date(days):
+    return dt.date.today() - dt.timedelta(days=rand_num(days))
+
+def get_time():
+    return dt.time(minute=rand_num(59))
+
+# Because there can't be too many server owners
+def get_biased_bool():
+    if rand_num(10) > 9: return True
+    return False

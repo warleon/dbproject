@@ -27,7 +27,7 @@ CREATE TABLE sala(
 
 CREATE TABLE partida(
 	codigo			int,
-	servidor_nombre	varchar(30), -- para que si sala solo pertenece a un servidor
+	servidor_nombre	varchar(35), -- para que si sala solo pertenece a un servidor
 	sala_codigo		int,
 	-- Jugadores		varchar(30), innecesario por la tabla juega
 	fecha			date,
