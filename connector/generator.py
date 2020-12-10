@@ -6,12 +6,14 @@ numbers = ['1','2','3','4','5','6','7','8','9','.']
 idiomas = ['Spanish', 'English', 'German', 'French', 'Portuguese', 'Chinese']
 paises = ['Spain', 'US', 'Germany', 'France', 'Portugal', 'China']
 bools = [True, False]
+contractTypes = ['tipo1','tipo2','tipo3']
+itemTypes = ['Escenario', 'Audio', '3Dmodel']
 
 def rand_num(max):
     return rd.randint(0, max)
 
-def rand_str(dict, size):
-    return ''.join(rd.choice(dict) for x in range(size))
+def rand_str(strings, size):
+    return ''.join(rd.choice(string) for x in range(size))
 
 def rand_bool():
     return rd.choice(bools)
@@ -33,3 +35,9 @@ def get_idioma():
 
 def get_nombre():
     return rand_str(string.ascii_letters, 35)
+
+def get_contract():
+    return rand_str(contractTypes, 1)
+
+def get_item():
+    return rand_str(itemTypes, 1)

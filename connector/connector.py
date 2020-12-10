@@ -51,7 +51,7 @@ def insertServidor(curr, n):
     # Add 0 to 5 servidores for each user that is a server-owner
     for row in queryResult:
         usuario = row[0]
-        for i in range(gen.rand_num(n / 100)):
+        for i in range(gen.rand_num(n / 100)): # TODO check size
             curr.execute(INSERT.format(table, values.format(gen.get_nombre(),
             usuario, gen.get_ip(), gen.rand_bool(), gen.get_idioma(), gen.get_locacion())))
 
@@ -63,11 +63,23 @@ def insertSala(curr):
     # Add 0 to 10 salas for each servidor
     codigo = 1
     for row in queryResult:
-        servidornombre = queryResult[0]
+        servidor_nombre = queryResult[0]
         for i in range(gen.rand_num(10)):
             # TODO remove jugadores from sala
-            curr.execute(INSERT.format(table, values.format(servidornombre, codigo, gen.rand_bool())))
+            curr.execute(INSERT.format(table, values.format(servidor_nombre, codigo, gen.rand_bool())))
             codigo += 1
 
+def insertPartida(curr):
+    table = "partida(codigo, servidor_nombre, sala_codigo, fecha, duracion, escenario_nombre)"
+    values = valuesFormat(6)
+    curr.execute(SELECT.format('servidor_nombre, codigo', 'sala', '1=1'))
+
+# TODO insertJuega
+
+def insertItem(curr):
+    table = "item(nombre, limite_usos, descripcion, contrato, tipo, data)"
+    values = valuesFormat(6)
+
+# TODO insert posee
 
 main()
