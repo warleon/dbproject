@@ -13,7 +13,7 @@ CREATE TABLE servidor(
 CREATE TABLE usuario(
 	nombre			varchar(30),
 	is_jugador 		boolean,
-	is_comerciante	boolean,
+	is_comerciante	boolean, -- de que sirve? deberia haber tabla vende item?
 	is_server_Owner 	boolean
 );
 
@@ -42,9 +42,10 @@ CREATE TABLE juega(
 );
 
 CREATE TABLE item(
-	nombre			varchar(60),
+	nombre			varchar(40),
 	limite_usos		int,
-	descripcion		varchar(255),
+	-- descripcion		varchar(255), para insertar mas rapido
+	descripcion		varchar(120),
 	contrato		contractType,
 	tipo			itemType,
 	precio			int
@@ -52,5 +53,5 @@ CREATE TABLE item(
 
 CREATE TABLE posee(
 	usuario_nombre	varchar(30),
-	item_nombre		varchar(60)
+	item_nombre		varchar(40)
 );

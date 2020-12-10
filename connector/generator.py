@@ -18,9 +18,6 @@ def rand_str(strings, size):
 def rand_bool():
     return rd.choice(bools)
 
-def get_usuario():
-    return rand_str(string.ascii_letters, 30)
-
 def get_usuario_tipo():
     return rand_str(usuario_tipos, 1)
 
@@ -33,8 +30,8 @@ def get_locacion():
 def get_idioma():
     return rand_str(idiomas, 1)
 
-def get_nombre():
-    return rand_str(string.ascii_letters, 35)
+def get_nombre(n):
+    return rand_str(string.ascii_letters, n)
 
 def get_contract():
     return rand_str(contractTypes, 1)
