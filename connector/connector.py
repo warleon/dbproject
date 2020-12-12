@@ -11,7 +11,7 @@ SELECT = "select {} from {} where {}"
 SELECT2 = "select {} from {}"
 
 def main():
-    # insertData(1000, SCHEMA1)
+    insertData(1000, SCHEMA1)
     # insertData(10000, SCHEMA2)
     # insertData(100000, SCHEMA3)
     # insertData(1000000, SCHEMA4)
@@ -94,8 +94,8 @@ def insertPartida(curr, n):
             codigo += 1
 
 def insertJuega(curr):
-    table = "juega(usuario_nombre, partida_codigo)"
-    values = valuesFormat(2)
+    table = "juega(usuario_nombre, partida_codigo, bajas, muertes)"
+    values = valuesFormat(4)
     curr.execute(SELECT.format('nombre', 'usuario', "is_jugador=true"))
     usuarios = [x[0] for x in curr.fetchall()]
     curr.execute(SELECT2.format('codigo', 'partida'))
@@ -104,14 +104,14 @@ def insertJuega(curr):
         temp = partidas
         for x in range(gen.rand_num(len(partidas) // 100)):
             index = gen.rand_num(len(temp) - 1)
-            curr.execute(INSERT.format(table, values.format(usuario_nombre, temp[index])))
+            curr.execute(INSERT.format(table, values.format(usuario_nombre, temp[index], gen.rand_num(100), gen.rand_num(100))))
             del temp[index]
 
 def insertItem(curr, n):
-    table = "item(nombre, limite_usos, descripcion, contrato, tipo, precio)"
-    values = valuesFormat(6)
+    table = "item(nombre, descripcion, contrato, tipo, precio)"
+    values = valuesFormat(5)
     for i in range(n // 10):
-        curr.execute(INSERT.format(table, values.format(gen.get_nombre(40), gen.rand_num(100), gen.get_nombre(120), 
+        curr.execute(INSERT.format(table, values.format(gen.get_nombre(40), gen.get_nombre(120), 
         gen.get_contract(), gen.get_item(), gen.rand_num(100))))
 
 def insertPosee(curr):
@@ -124,7 +124,6 @@ def insertPosee(curr):
     for usuario_nombre in usuarios:
         for x in range(gen.rand_num(len(items) // 100)):
             temp = items
-            # TODO check for item.limite_usos
             index = gen.rand_num(len(temp) - 1)
             curr.execute(INSERT.format(table, values.format(usuario_nombre, temp[index])))
             del temp[index]

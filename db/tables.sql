@@ -38,7 +38,9 @@ CREATE TABLE partida(
 
 CREATE TABLE juega(
 	usuario_nombre	varchar(30),
-	partida_codigo	int
+	partida_codigo	int,
+	bajas			int,
+	muertes			int
 );
 
 CREATE TABLE item(
