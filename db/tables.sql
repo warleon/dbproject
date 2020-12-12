@@ -43,7 +43,6 @@ CREATE TABLE juega(
 
 CREATE TABLE item(
 	nombre			varchar(40),
-	limite_usos		int,
 	-- descripcion		varchar(255), para insertar mas rapido
 	descripcion		varchar(120),
 	contrato		contractType,

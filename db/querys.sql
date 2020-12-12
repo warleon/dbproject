@@ -10,6 +10,7 @@ where
 group by Se.locacion, Se.nombre
 order by locacion, ju_act desc
 ;
+
 --query 2
 --quick reference: https://blog.softhints.com/mysql-select-n-max-values-per-group/
 create temporary table LPH as
@@ -40,9 +41,11 @@ order by tiempoacc desc
 ;
 
 --query 4
-SELECT
-FROM
-WHERE
+SELECT S.nombre as servidor, avg(P.duracion) as duracion_media
+FROM partida P, servidor S
+WHERE P.servidor_nombre = S.nombre
+group by S.nombre
+order by duracion_media desc
 ;
 
 --query 5

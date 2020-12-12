@@ -11,10 +11,11 @@ SELECT = "select {} from {} where {}"
 SELECT2 = "select {} from {}"
 
 def main():
-    insertData(1000, SCHEMA1)
+    # insertData(1000, SCHEMA1)
     # insertData(10000, SCHEMA2)
     # insertData(100000, SCHEMA3)
     # insertData(1000000, SCHEMA4)
+    return 0
 
 def insertData(n , schema):
     # Connect to database
