@@ -12,7 +12,7 @@ SELECT2 = "select {} from {}"
 
 def main():
     insertData(1000, SCHEMA1)
-    insertData(10000, SCHEMA2)
+    # insertData(10000, SCHEMA2)
     # insertData(100000, SCHEMA3)
     # insertData(1000000, SCHEMA4)
 
@@ -22,10 +22,10 @@ def insertData(n , schema):
     curr = conn.cursor()
     # Insert data
     insertUsuario(curr, n)
+    insertItem(curr, n)
     insertServidor(curr, n)
     insertSala(curr, n)
     insertPartida(curr, n)
-    insertItem(curr, n)
     insertJuega(curr)
     insertPosee(curr)
     
@@ -54,7 +54,7 @@ def insertUsuario(curr, n):
 def insertServidor(curr, n):
     table = "servidor(nombre, usuario_nombre, ip, activo, idioma, locacion)"
     values = valuesFormat(6)
-    curr.execute(SELECT.format('nombre', 'usuario', "is_server_owner='true'"))
+    curr.execute(SELECT.format('nombre', 'usuario', "is_server_owner=true"))
     queryResult = curr.fetchall()
     # Add 2 servidores for each user that is a server-owner
     for row in queryResult:
@@ -80,14 +80,16 @@ def insertPartida(curr, n):
     table = "partida(codigo, servidor_nombre, sala_codigo, fecha, duracion, escenario_nombre)"
     values = valuesFormat(6)
     curr.execute(SELECT2.format('servidor_nombre, codigo', 'sala'))
-    queryResult = curr.fetchall()
+    salas = curr.fetchall()
+    curr.execute(SELECT.format('nombre', 'item', "tipo = 'Escenario'"))
+    escenarios = [x[0] for x in curr.fetchall()]
     codigo = 1
-    for row in queryResult:
+    for row in salas:
         servidor_nombre = row[0]
         sala_codigo = row[1]
         for i in range(gen.rand_num(100)): # avg 50
             curr.execute(INSERT.format(table, values.format(codigo, servidor_nombre, sala_codigo, 
-            gen.get_date(14), gen.get_time(), gen.get_nombre(16))))
+            gen.get_date(14), gen.get_time(), escenarios[gen.rand_num(len(escenarios) - 1)])))
             codigo += 1
 
 def insertJuega(curr):

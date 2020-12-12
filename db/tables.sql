@@ -32,7 +32,7 @@ CREATE TABLE partida(
 	-- Jugadores		varchar(30), innecesario por la tabla juega
 	fecha			date,
 	duracion		time,
-	escenario_nombre	varchar(16)
+	escenario_nombre	varchar(40)
 	-- acciones		varchar(255)--direccion en disco de las acciones hechas en esa partida
 );
 
