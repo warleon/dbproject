@@ -57,3 +57,10 @@ where
 	item.tipo = 'Escenario'::itemtype
 group by posee.item_nombre
 ;
+
+--query 6
+SELECT usuario_nombre, sum(bajas) as bajas_totales, sum(muertes) as muertes_totales
+FROM juega
+group by usuario_nombre
+order by bajas_totales
+;
