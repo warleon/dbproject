@@ -12,7 +12,7 @@ SELECT2 = "select {} from {}"
 
 def main():
     insertData(1000, SCHEMA1)
-    # insertData(10000, SCHEMA2)
+    insertData(10000, SCHEMA2)
     # insertData(100000, SCHEMA3)
     # insertData(1000000, SCHEMA4)
 
@@ -21,11 +21,11 @@ def insertData(n , schema):
     conn = psycopg2.connect(database=DATABASE, options="-c search_path={}".format(schema))
     curr = conn.cursor()
     # Insert data
-    # insertUsuario(curr, n)
-    # insertServidor(curr, n)
-    # insertSala(curr, n)
-    # insertPartida(curr, n)
-    # insertItem(curr, n)
+    insertUsuario(curr, n)
+    insertServidor(curr, n)
+    insertSala(curr, n)
+    insertPartida(curr, n)
+    insertItem(curr, n)
     insertJuega(curr)
     insertPosee(curr)
     
@@ -44,19 +44,22 @@ def valuesFormat(n):
 def insertUsuario(curr, n):
     table = "usuario(nombre, is_jugador, is_comerciante, is_server_owner)"
     values = valuesFormat(4)
-    for x in range(n):
+    for x in range(n // 1000 * 2):
         curr.execute(INSERT.format(table, values.format(gen.get_nombre(30), gen.rand_bool(),
-        gen.rand_bool(), gen.get_biased_bool())))
+        gen.rand_bool(), 'true')))
+    for x in range(n - (n // 1000 * 2)):
+        curr.execute(INSERT.format(table, values.format(gen.get_nombre(30), gen.rand_bool(),
+        gen.rand_bool(), 'false')))
 
 def insertServidor(curr, n):
     table = "servidor(nombre, usuario_nombre, ip, activo, idioma, locacion)"
     values = valuesFormat(6)
     curr.execute(SELECT.format('nombre', 'usuario', "is_server_owner='true'"))
     queryResult = curr.fetchall()
-    # Add 0 to 5 servidores for each user that is a server-owner
+    # Add 2 servidores for each user that is a server-owner
     for row in queryResult:
         usuario = row[0]
-        for i in range(gen.rand_num(2)): # TODO check size
+        for i in range(gen.rand_num(4)): # avg 2
             curr.execute(INSERT.format(table, values.format(gen.get_nombre(35),
             usuario, gen.get_ip(), gen.rand_bool(), gen.get_idioma(), gen.get_locacion())))
 
@@ -65,11 +68,11 @@ def insertSala(curr, n):
     values = valuesFormat(3)
     curr.execute(SELECT2.format('nombre', 'servidor'))
     queryResult = curr.fetchall()
-    # Add 0 to 10 salas for each servidor
+    # Add 0 to 20 salas for each servidor
     codigo = 1
     for row in queryResult:
         servidor_nombre = row[0]
-        for i in range(gen.rand_num(3)):
+        for i in range(gen.rand_num(20)): # avg 10
             curr.execute(INSERT.format(table, values.format(servidor_nombre, codigo, gen.rand_bool())))
             codigo += 1
 
@@ -82,10 +85,9 @@ def insertPartida(curr, n):
     for row in queryResult:
         servidor_nombre = row[0]
         sala_codigo = row[1]
-        # TODO insert random dates and times
-        for i in range(gen.rand_num(5)):
+        for i in range(gen.rand_num(100)): # avg 50
             curr.execute(INSERT.format(table, values.format(codigo, servidor_nombre, sala_codigo, 
-            gen.get_date(10), gen.get_time(), gen.get_nombre(16))))
+            gen.get_date(14), gen.get_time(), gen.get_nombre(16))))
             codigo += 1
 
 def insertJuega(curr):
@@ -96,12 +98,16 @@ def insertJuega(curr):
     curr.execute(SELECT2.format('codigo', 'partida'))
     partidas = [x[0] for x in curr.fetchall()]
     for usuario_nombre in usuarios:
-        curr.execute(INSERT.format(table, values.format(usuario_nombre, partidas[gen.rand_num(len(partidas) - 1)])))
+        temp = partidas
+        for x in range(gen.rand_num(len(partidas) // 100)):
+            index = gen.rand_num(len(temp) - 1)
+            curr.execute(INSERT.format(table, values.format(usuario_nombre, temp[index])))
+            del temp[index]
 
 def insertItem(curr, n):
     table = "item(nombre, limite_usos, descripcion, contrato, tipo, precio)"
     values = valuesFormat(6)
-    for i in range(n // 100):
+    for i in range(n // 10):
         curr.execute(INSERT.format(table, values.format(gen.get_nombre(40), gen.rand_num(100), gen.get_nombre(120), 
         gen.get_contract(), gen.get_item(), gen.rand_num(100))))
 
@@ -113,7 +119,11 @@ def insertPosee(curr):
     curr.execute(SELECT2.format('nombre', 'item'))
     items = [x[0] for x in curr.fetchall()]
     for usuario_nombre in usuarios:
-        # TODO check for item.limite_usos
-        curr.execute(INSERT.format(table, values.format(usuario_nombre, items[gen.rand_num(len(items) - 1)])))
+        for x in range(gen.rand_num(len(items) // 100)):
+            temp = items
+            # TODO check for item.limite_usos
+            index = gen.rand_num(len(temp) - 1)
+            curr.execute(INSERT.format(table, values.format(usuario_nombre, temp[index])))
+            del temp[index]
     
 main()

@@ -19,3 +19,5 @@ SET SCHEMA 'db_project10_5';
 SET SCHEMA 'db_project10_6';
 \i dbproject/db/tables.sql
 \i dbproject/db/constraints.sql
+
+SET SCHEMA 'db_project10_3';

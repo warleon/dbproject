@@ -31,7 +31,7 @@ def get_idioma():
     return rand_str(idiomas, 1)
 
 def get_nombre(n):
-    return rand_str(string.ascii_letters, n)
+    return rand_str(string.ascii_letters, rd.randint(10, n))
 
 def get_contract():
     return rand_str(contractTypes, 1)
@@ -39,13 +39,9 @@ def get_contract():
 def get_item():
     return rand_str(itemTypes, 1)
 
+# Returns random date between today and days days
 def get_date(days):
     return dt.date.today() - dt.timedelta(days=rand_num(days))
 
 def get_time():
     return dt.time(minute=rand_num(59))
-
-# Because there can't be too many server owners
-def get_biased_bool():
-    if rand_num(10) > 9: return True
-    return False
