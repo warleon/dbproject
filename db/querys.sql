@@ -11,6 +11,7 @@ group by Se.locacion, Se.nombre
 order by locacion, ju_act desc
 ;
 --query 2
+--quick reference: https://blog.softhints.com/mysql-select-n-max-values-per-group/
 create temporary table LPH as
 	SELECT Se.locacion, Ju.usuario_nombre as nombre, sum(Pa.duracion) as tjugado
 	FROM juega Ju, Partida Pa, servidor Se
@@ -30,9 +31,12 @@ where (
 ;
 
 --query 3
-SELECT
-FROM
-WHERE
+select distinct posee.item_nombre, count(LPH.nombre) vecesusado, sum(LPH.tjugado) tiempoacc
+from LPH, posee
+where
+	LPH.nombre=posee.usuario_nombre
+group by posee.item_nombre
+order by tiempoacc desc
 ;
 
 --query 4
@@ -42,7 +46,11 @@ WHERE
 ;
 
 --query 5
-SELECT
-FROM
-WHERE
+select distinct posee.item_nombre, count(LPH.nombre) vecesusado, sum(LPH.tjugado) tiempoacc
+from LPH, posee, item
+where
+	LPH.nombre=posee.usuario_nombre and
+	item.nombre=posee.item_nombre and
+	item.tipo = 'Escenario'::itemtype
+group by posee.item_nombre
 ;
