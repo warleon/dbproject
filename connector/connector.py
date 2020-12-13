@@ -8,18 +8,42 @@ SELECT2 = "select {} from {}"
 
 def insertData(n , schema):
     # Connect to database
+    print("conecting to schema:",schema)
     conn = psycopg2.connect(database=DATABASE, options="-c search_path={}".format(schema))
     curr = conn.cursor()
     # Insert data
+    print("inserting ",n, "rows in Usuario.")
     insertUsuario(curr, n)
+    print("commit :D")
+    conn.commit()
+
+    print("inserting ",n, "rows in Item.")
     insertItem(curr, n)
+    print("commit :D")
+    conn.commit()
+
+    print("inserting ",n, "rows in Servidor.")
     insertServidor(curr, n)
+    print("commit :D")
+    conn.commit()
+
+    print("inserting ",n, "rows in Sala.")
     insertSala(curr, n)
+    print("commit :D")
+    conn.commit()
+
+    print("inserting ",n, "rows in Partida.")
     insertPartida(curr, n)
+    print("commit :D")
+    conn.commit()
+
+    print("inserting ",n, "rows in Juega.")
     insertJuega(curr)
+    print("inserting ",n, "rows in Posee.")
     insertPosee(curr)
     
     # Commit and close session
+    print("commit :D")
     conn.commit()
     curr.close()
     conn.close()
