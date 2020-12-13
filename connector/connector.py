@@ -1,21 +1,10 @@
 import psycopg2, generator as gen
 
 DATABASE = "db1project"
-SCHEMA1 = "db_project10_3"
-SCHEMA2 = "db_project10_4"
-SCHEMA3 = "db_project10_5"
-SCHEMA4 = "db_project10_6"
 # Query templates
 INSERT = "insert into {} values ({})"
 SELECT = "select {} from {} where {}"
 SELECT2 = "select {} from {}"
-
-def main():
-    insertData(1000, SCHEMA1)
-    # insertData(10000, SCHEMA2)
-    # insertData(100000, SCHEMA3)
-    # insertData(1000000, SCHEMA4)
-    return 0
 
 def insertData(n , schema):
     # Connect to database
@@ -127,5 +116,3 @@ def insertPosee(curr):
             index = gen.rand_num(len(temp) - 1)
             curr.execute(INSERT.format(table, values.format(usuario_nombre, temp[index])))
             del temp[index]
-    
-main()
